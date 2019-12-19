@@ -5,6 +5,8 @@ import java.text.ParseException;
 
 import org.apache.commons.lang3.time.DateUtils;
 
+import com.google.common.base.CharMatcher;
+
 public class Test {
 
 	
@@ -17,7 +19,9 @@ public class Test {
 		
 		//System.out.println(DateUtils.parseDate("2019-09-02", "yyyy/MM/dd"));;
 		
-		System.out.println(dg(4));
+		//System.out.println(dg(4));
+		
+		System.err.println(CharMatcher.anyOf("否").matchesAnyOf("  是  "));
 	}
 	
 	public static int dg(int n) {
