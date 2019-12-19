@@ -2,9 +2,12 @@ package com.zy.sc.thread;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import com.google.common.base.Stopwatch;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import com.zy.sc.comm.Constant;
@@ -13,6 +16,7 @@ import com.zy.sc.entity.Subjects;
 import com.zy.sc.mapper.PhPersonMapper;
 import com.zy.sc.mapper.SubjectsMapper;
 
+@Slf4j
 @Component
 public class SyncUserThread implements Runnable{
 
@@ -24,14 +28,21 @@ public class SyncUserThread implements Runnable{
 	
 	@Override
 	public void run() {
+		final Stopwatch stopwatch = Stopwatch.createStarted();
+
+		log.info("===================人员数据同步开始==============");
+
 		List<Subjects> subs = subjectsMapper.selectList(null);
-		//List<PhPerson> persons = Lists.newArrayList();
+
+		log.info("===================人员同步数据大小[{}]==========",subs.size());
 		subs.stream().forEach(sub->{
 			
 			PhPerson person = userConversionPerson(sub);
 			phPersonMapper.insert(person);
 		});
-		
+
+		log.info("===================人员数据同步结束,耗时[{}]秒==============",stopwatch.elapsed(TimeUnit.SECONDS));
+		stopwatch.stop();
 	}
 	
 	public PhPerson userConversionPerson(Subjects sub) {

@@ -1,9 +1,12 @@
 package com.zy.sc.thread;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import com.google.common.base.Stopwatch;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
@@ -19,6 +22,7 @@ import com.zy.sc.mapper.SubjectsMapper;
 import com.zy.sc.utils.ByteConversion;
 
 
+@Slf4j
 @Component
 public class SyncScThread implements Runnable{
 
@@ -33,12 +37,19 @@ public class SyncScThread implements Runnable{
 	
 	@Override
 	public void run() {
-		
+		final Stopwatch stopwatch = Stopwatch.createStarted();
+	    log.info("===================曲度数据同步开始==============");
 		List<CurvesInsepctResult> curs = curvesInsepctResultMapper.selectList(null);
+		log.info("===================曲度同步数据大小[{}]======",curs.size());
+
 		curs.stream().forEach((cur)->{
 			SpinalCurvature sCurvature = conversion(cur);
 			scMapper.insert(sCurvature);
 		});
+
+		log.info("===================曲度数据结束同步,耗时[{}]秒======",stopwatch.elapsed(TimeUnit.SECONDS));
+		stopwatch.stop();
+
 	}
 	
 	

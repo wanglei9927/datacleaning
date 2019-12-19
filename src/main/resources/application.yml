@@ -132,3 +132,5 @@ spring:
 mybatis-plus:
   #mapper-locations: classpath:mapping/**/*Mapper.xml
   config-location: classpath:/xml/mybatis-config.xml
+logging:
+  config: classpath:logback.xml

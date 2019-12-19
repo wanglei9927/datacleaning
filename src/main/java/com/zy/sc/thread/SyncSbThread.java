@@ -1,9 +1,12 @@
 package com.zy.sc.thread;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import com.google.common.base.Stopwatch;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
@@ -17,6 +20,7 @@ import com.zy.sc.mapper.SpinalBendMapper;
 import com.zy.sc.mapper.SubjectsMapper;
 import com.zy.sc.utils.ByteConversion;
 
+@Slf4j
 @Component
 public class SyncSbThread implements Runnable {
 
@@ -32,8 +36,11 @@ public class SyncSbThread implements Runnable {
 
 	@Override
 	public void run() {
+		final Stopwatch stopwatch = Stopwatch.createStarted();
+		log.info("===================侧弯数据同步开始==============");
 		List<InspectResult> sbs = inspectResultMapper.selectList(null);
-		
+		log.info("===================侧弯同步数据大小[{}]======",sbs.size());
+
 		sbs.stream().forEach((sb)->{
 			
 			SpinalBend spinalBend = conversion(sb);
@@ -41,7 +48,8 @@ public class SyncSbThread implements Runnable {
 			sbMapper.insert(spinalBend);
 			
 		});
-		
+		log.info("===================侧弯数据同步结束,耗时[{}]秒==============",stopwatch.elapsed(TimeUnit.SECONDS));
+		stopwatch.stop();
 	}
 	
 	

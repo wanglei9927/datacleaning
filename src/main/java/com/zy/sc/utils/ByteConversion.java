@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ByteConversion {
 
 	/**
@@ -84,8 +86,6 @@ public class ByteConversion {
 		case 0:
 			for (int i = 0; i < 17; i++) {
 				String dStr = Str.substring(i * 21 * 2, i * 21 * 2 + 21 * 2);
-				System.out.println("第" + (i + 1) + "组数据" + dStr);
-				System.out.println("第" + (i + 1) + "组数据" + ByteUtils.byteArrayToStr(ByteUtils.getHexBytes(dStr)));
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put(i + "",
 						ByteUtils.byteArrayToStr(ByteUtils.getHexBytes(dStr.substring(2, dStr.length()))));
@@ -97,8 +97,6 @@ public class ByteConversion {
 				String dStr = Str.substring(i * 21 * 2, i * 21 * 2 + 21 * 2);
 //	                    Log.e("ddd", "第" + (i + 1) + "组数据" + dStr);
 //	                    Log.e("ddd", "第" + (i + 1) + "组数据" + ByteUtils.byteArrayToStr(ByteUtils.getHexBytes(dStr)));
-				System.out.println("第" + (i + 1) + "组数据" + BleDataUtils
-						.toRadians(ByteUtils.byteArrayToStr(ByteUtils.getHexBytes(dStr.substring(2, dStr.length())))));
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put(i + "", BleDataUtils
 						.toRadians(ByteUtils.byteArrayToStr(ByteUtils.getHexBytes(dStr.substring(2, dStr.length())))));
@@ -135,8 +133,6 @@ public class ByteConversion {
 		case 2:
 			for (int i = 0; i < 3; i++) {
 				String dStr = Str.substring(i * 200 * 2, i * 200 * 2 + 200 * 2);
-				System.out.println("第" + (i + 1) + "组数据" + dStr);
-				System.out.println("第" + (i + 1) + "组数据" + ByteUtils.byteArrayToStr(ByteUtils.getHexBytes(dStr)));
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put(i + "", ByteUtils.byteArrayToStr(ByteUtils.getHexBytes(dStr)));
 				jsonArray.add(jsonObject);
