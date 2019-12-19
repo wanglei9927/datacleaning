@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.sc.mapper.InspectResultMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zy.sc.entity.InspectResult">
+        <id column="Id" property="Id" />
+        <result column="SubjectId" property="SubjectId" />
+        <result column="ATI" property="ati" />
+        <result column="Percent" property="Percent" />
+        <result column="Direction" property="Direction" />
+        <result column="Part" property="Part" />
+        <result column="LValue" property="LValue" />
+        <result column="LPercent" property="LPercent" />
+        <result column="LPart" property="LPart" />
+        <result column="RValue" property="RValue" />
+        <result column="RPercent" property="RPercent" />
+        <result column="RPart" property="RPart" />
+        <result column="DeviceCode" property="DeviceCode" />
+        <result column="Evaluate" property="Evaluate" />
+        <result column="LVertebra" property="LVertebra" />
+        <result column="RVertebra" property="RVertebra" />
+        <result column="Vertebra" property="Vertebra" />
+        <result column="CreatedUserId" property="CreatedUserId" />
+        <result column="CreatedDate" property="CreatedDate" />
+        <result column="OrgCode" property="OrgCode" />
+        <result column="OrginalData" property="OrginalData" />
+        <result column="DeletedDate" property="DeletedDate" />
+        <result column="DeletedUserId" property="DeletedUserId" />
+    </resultMap>
+
+</mapper>

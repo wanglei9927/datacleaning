@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.sc.mapper.PhPersonMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zy.sc.entity.PhPerson">
+        <id column="person_id" property="personId" />
+        <result column="name" property="name" />
+        <result column="sex" property="sex" />
+        <result column="birthday" property="birthday" />
+        <result column="id_card" property="idCard" />
+        <result column="social_security_card" property="socialSecurityCard" />
+        <result column="height" property="height" />
+        <result column="weight" property="weight" />
+        <result column="photo" property="photo" />
+        <result column="photo_path" property="photoPath" />
+        <result column="mobile_phone" property="mobilePhone" />
+        <result column="position" property="position" />
+        <result column="professional_title" property="professionalTitle" />
+        <result column="sign_status" property="signStatus" />
+        <result column="intro" property="intro" />
+        <result column="org_id" property="orgId" />
+        <result column="system_id" property="systemId" />
+        <result column="area_code" property="areaCode" />
+        <result column="area_id" property="areaId" />
+        <result column="address" property="address" />
+        <result column="del_flag" property="delFlag" />
+        <result column="create_by" property="createBy" />
+        <result column="create_datetime" property="createDatetime" />
+        <result column="last_update_by" property="lastUpdateBy" />
+        <result column="last_update_datetime" property="lastUpdateDatetime" />
+        <result column="contact_person_id" property="contactPersonId" />
+        <result column="contact_name" property="contactName" />
+        <result column="contact_tel" property="contactTel" />
+        <result column="company" property="company" />
+        <result column="census_register" property="censusRegister" />
+        <result column="census_register_address" property="censusRegisterAddress" />
+        <result column="blood_type" property="bloodType" />
+        <result column="profession" property="profession" />
+        <result column="permanent_type" property="permanentType" />
+        <result column="nation" property="nation" />
+        <result column="education" property="education" />
+        <result column="disability_status" property="disabilityStatus" />
+        <result column="disability_id" property="disabilityId" />
+        <result column="marital_status" property="maritalStatus" />
+        <result column="telephone" property="telephone" />
+        <result column="medicare_card" property="medicareCard" />
+        <result column="medical_insurance_type" property="medicalInsuranceType" />
+        <result column="kitchen" property="kitchen" />
+        <result column="fuel" property="fuel" />
+        <result column="drinking_water" property="drinkingWater" />
+        <result column="livestock" property="livestock" />
+        <result column="lavatory" property="lavatory" />
+        <result column="plan_date" property="planDate" />
+        <result column="complete_rate" property="completeRate" />
+        <result column="symptom" property="symptom" />
+        <result column="rh_type" property="rhType" />
+        <result column="person_id_other" property="personIdOther" />
+        <result column="family_code" property="familyCode" />
+        <result column="relation_ship" property="relationShip" />
+        <result column="address_type" property="addressType" />
+        <result column="age" property="age" />
+        <result column="lng" property="lng" />
+        <result column="lat" property="lat" />
+        <result column="household_registration_location" property="householdRegistrationLocation" />
+        <result column="current_address" property="currentAddress" />
+        <result column="remark" property="remark" />
+        <result column="isStudent" property="isStudent" />
+    </resultMap>
+
+</mapper>

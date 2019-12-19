@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.echarts.mapper.DeviceMapper">
+
+
+	<select id="selectDeviceData" resultType="com.zy.echarts.vo.DeviceData">
+	
+		SELECT
+			 dayHour AS HOUR,
+			 SN,
+			
+			IF (count IS NULL, 0, Count) AS Count
+			FROM
+			 (
+			  SELECT
+			   count(*) AS Count,
+			   SN,
+			   HOUR (dd.create_time) AS HOUR
+			  FROM
+			   device_data dd
+			  WHERE
+			   left(dd.create_time,10)='2019-05-22'
+			  GROUP BY
+			   HOUR (dd.create_time),
+			   SN
+			  ORDER BY
+			   HOUR (dd.create_time)
+			 ) A
+			RIGHT JOIN (
+			 SELECT
+			  one.hours + two.hours AS dayHour
+			 FROM
+			  (
+			   SELECT
+			    0 hours
+			   UNION ALL
+			    SELECT
+			     1 hours
+			    UNION ALL
+			     SELECT
+			      2 hours
+			     UNION ALL
+			      SELECT
+			       3 hours
+			      UNION ALL
+			       SELECT
+			        4 hours
+			       UNION ALL
+			        SELECT
+			         5 hours
+			        UNION ALL
+			         SELECT
+			          6 hours
+			         UNION ALL
+			          SELECT
+			           7 hours
+			          UNION ALL
+			           SELECT
+			            8 hours
+			           UNION ALL
+			            SELECT
+			             9 hours
+			  ) one
+			 CROSS JOIN (
+			  SELECT
+			   0 hours
+			  UNION ALL
+			   SELECT
+			    10 hours
+			   UNION ALL
+			    SELECT
+			     20 hours
+			 ) two
+			 WHERE
+			  (one.hours + two.hours) &lt;  24
+			) B ON A. HOUR = CONVERT (B.dayHour, SIGNED)
+			ORDER BY
+			 dayHour
+
+	</select>
+
+</mapper>

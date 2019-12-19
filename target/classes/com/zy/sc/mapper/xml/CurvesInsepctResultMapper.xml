@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.sc.mapper.CurvesInsepctResultMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zy.sc.entity.CurvesInsepctResult">
+        <id column="Id" property="Id" />
+        <result column="SubjectId" property="SubjectId" />
+        <result column="FrontBulgeDegree" property="FrontBulgeDegree" />
+        <result column="BehindBulgeDegree" property="BehindBulgeDegree" />
+        <result column="StartFrontBulgePoint" property="StartFrontBulgePoint" />
+        <result column="StartBehindBulgePoint" property="StartBehindBulgePoint" />
+        <result column="StartFrontBulgePercent" property="StartFrontBulgePercent" />
+        <result column="StartBehindBulgePercent" property="StartBehindBulgePercent" />
+        <result column="FrontBulgePoint" property="FrontBulgePoint" />
+        <result column="BehindBulgePoint" property="BehindBulgePoint" />
+        <result column="FrontBulgePercent" property="FrontBulgePercent" />
+        <result column="BehindbulgePercent" property="BehindbulgePercent" />
+        <result column="EndFrontBulgePoint" property="EndFrontBulgePoint" />
+        <result column="EndBehindBulgePoint" property="EndBehindBulgePoint" />
+        <result column="EndFrontBulgePercent" property="EndFrontBulgePercent" />
+        <result column="EndBehindBulgePercent" property="EndBehindBulgePercent" />
+        <result column="FrontBulgePart" property="FrontBulgePart" />
+        <result column="BehindBulgePart" property="BehindBulgePart" />
+        <result column="Evaluate" property="Evaluate" />
+        <result column="CreatedUserId" property="CreatedUserId" />
+        <result column="CreatedDate" property="CreatedDate" />
+        <result column="OrgCode" property="OrgCode" />
+        <result column="OrginalData" property="OrginalData" />
+        <result column="ProductCode" property="ProductCode" />
+        <result column="DeletedDate" property="DeletedDate" />
+        <result column="DeletedUserId" property="DeletedUserId" />
+    </resultMap>
+
+</mapper>
