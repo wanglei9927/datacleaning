@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -164,10 +165,10 @@ public class test {
 	  }
 	
 	@Test
-	public void test5() {
+	public void test15() {
 		
 		long time1 = 11883;//41884  
-	    String result1 = new SimpleDateFormat("yyyy-MM-dd").format(new Date(time1 * 1000*100000));
+	    String result1 = new SimpleDateFormat("yyyy-MM-dd").format(new Date(25569 * 1000*100000));
 	    
 
 	    try {
@@ -185,5 +186,29 @@ public class test {
 	@Test
 	public void test6() {
 		System.err.println(CharMatcher.javaDigit().matchesAllOf("41883"));
+	}
+	
+	@Test
+	public void test7() throws ParseException {
+		//日期转时间戳
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse("1899-12-30");
+	}
+	
+	/***
+	 * excel 日期戳转换成时间
+	 * @throws ParseException
+	 */
+	@Test
+	public void test8() throws ParseException {
+		//1900-1-1
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date begin = simpleDateFormat.parse("1899-12-30");
+		Calendar rightNow = Calendar.getInstance();
+		rightNow.setTime(begin);
+		rightNow.add(Calendar.DAY_OF_YEAR, 43716);
+		
+		 Date dt1=rightNow.getTime();
+	     String reStr = simpleDateFormat.format(dt1);
+	     System.out.println(reStr);
 	}
 }
