@@ -18,6 +18,8 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
  *
  */
 public class AutoGeneratorHelper {
+	
+	//234234234
 
 	/**
 	 * <p>
