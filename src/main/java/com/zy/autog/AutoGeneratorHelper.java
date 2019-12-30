@@ -43,7 +43,7 @@ public class AutoGeneratorHelper {
 		gc.setAuthor("wanglei");
 		mpg.setGlobalConfig(gc);
 
-		// 数据源配置
+		// 数据源配置123
 		DataSourceConfig dsc = new DataSourceConfig();
 		dsc.setDbType(DbType.SQL_SERVER);
 		dsc.setTypeConvert(new MySqlTypeConvert());
