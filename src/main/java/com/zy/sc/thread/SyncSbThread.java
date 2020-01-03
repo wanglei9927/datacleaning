@@ -41,7 +41,7 @@ public class SyncSbThread implements Runnable {
 		List<InspectResult> sbs = inspectResultMapper.selectList(null);
 		log.info("===================侧弯同步数据大小[{}]======",sbs.size());
 
-		sbs.stream().forEach((sb)->{
+		sbs.parallelStream().forEach((sb)->{
 			
 			SpinalBend spinalBend = conversion(sb);
 			
@@ -57,6 +57,8 @@ public class SyncSbThread implements Runnable {
 		
 		SpinalBend spinalBend = new SpinalBend();
 		String OrginalData = sb.getOrginalData();
+
+
 		
 		OrginalData = CharMatcher.breakingWhitespace().removeFrom(OrginalData);
 
@@ -64,8 +66,12 @@ public class SyncSbThread implements Runnable {
 	
 		//处理后的数据与人员绑定
 		Subjects sub = subMapper.selectById(sb.getSubjectId());
+
+		String code = sub.getCode();
+		Integer id = sub.getId();
+		String personId =  code+id;
 		//person_id
-		spinalBend.setPersonId(sub.getCode());
+		spinalBend.setPersonId(personId);
 		
 		//TODO:test_service_id
 		//TODO:test_service_org

@@ -64,9 +64,11 @@ public class SyncScThread implements Runnable{
 		
 		//处理后的数据与人员绑定
 		Subjects sub = subjectsMapper.selectById(cur.getSubjectId());
-		//id
+		String code = sub.getCode();
+		int id = sub.getId();
+		String personId = code + id;
 		//person_id
-		sc.setPersonId(sub.getCode());
+		sc.setPersonId(personId);
 		//TODO:test_service_id
 		//TODO:test_service_org
 		sc.setTestingOrgId(Constant.ORG_ID);

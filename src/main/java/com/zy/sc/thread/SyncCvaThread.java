@@ -61,9 +61,13 @@ public class SyncCvaThread implements Runnable{
 		
 		//处理后的数据与人员绑定
 		Subjects sub = subjectsMapper.selectById(cva.getSubjectId());
+		String code = sub.getCode();
+		int id = sub.getId();
+
+		String personId = code+id;
 		//id
 		//person_id
-		cvaActivity.setPersonId(sub.getCode());
+		cvaActivity.setPersonId(personId);
 		//TODO:test_service_id
 		//TODO:test_service_org
 		cvaActivity.setTestingOrgId(Constant.ORG_ID);

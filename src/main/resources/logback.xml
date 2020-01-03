@@ -41,7 +41,19 @@
     </logger>
 
     <logger name="org.apache.ibatis" >
-        <level value="DEBUG" />
+        <level value="INFO" />
+    </logger>
+
+    <logger name="org.mybatis.spring" >
+        <level value="INFO" />
+    </logger>
+
+    <logger name="com.zy.sc.mapper" >
+        <level value="INFO" />
+    </logger>
+
+    <logger name="com.baomidou.dynamic.datasource.DynamicRoutingDataSource" >
+        <level value="INFO" />
     </logger>
 
     <root level="DEBUG">

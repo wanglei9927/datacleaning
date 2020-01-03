@@ -35,7 +35,7 @@ public class SyncUserThread implements Runnable{
 		List<Subjects> subs = subjectsMapper.selectList(null);
 
 		log.info("===================人员同步数据大小[{}]==========",subs.size());
-		subs.stream().forEach(sub->{
+		subs.parallelStream().forEach(sub->{
 			
 			PhPerson person = userConversionPerson(sub);
 			phPersonMapper.insert(person);
@@ -52,7 +52,10 @@ public class SyncUserThread implements Runnable{
 		LocalDateTime birthday = sub.getBirthday();
 		//1:男，2女
 		Integer gender = sub.getGender();
+
 		String code = sub.getCode();
+		Integer id = sub.getId();
+
 		LocalDateTime createdDate = sub.getCreatedDate();
 		String iDCardNum = sub.getIDCardNum();
 		String address = sub.getAddress();
@@ -62,8 +65,10 @@ public class SyncUserThread implements Runnable{
 		person.setName(name);	
 		person.setSex(gender==1?"01":"02");
 		person.setBirthday(birthday.toLocalDate());
-		
-		person.setPersonId(code);
+
+		//personId = code + id 降低重复概率
+		person.setPersonId(code+id);
+
 		person.setCreateDatetime(createdDate);
 		person.setIdCard(iDCardNum);
 		person.setCurrentAddress(address);
