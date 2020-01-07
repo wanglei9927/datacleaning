@@ -1,16 +1,18 @@
 package com.zy.socket;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.io.*;
 import java.net.Socket;
 
 public class Client {
 
+	public static void main(String[] args) throws UnsupportedEncodingException {
 	/**
 	 *  java 的输入输出流
 	 *  输入流：input 读取
 	 *  输出流：output 写入
 	 */
-	public static void main(String[] args) {
 		
 		try {
 			Socket socket = new Socket("127.0.0.1",8080);
@@ -44,6 +46,7 @@ public class Client {
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+	}	
 	}
+	
 }
