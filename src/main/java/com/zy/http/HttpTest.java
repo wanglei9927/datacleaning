@@ -6,13 +6,17 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 
 public class HttpTest {
 
-	public static void main(String[] args) {
-		String result = loadJSON("http://localhost:8081/oneplatform/physicalExamination/queryReportList?systemId=SYS-0010&appKey=1111&a=1");
+	public static void main(String[] args) throws  Exception{
+        StringBuilder sb = new StringBuilder("http://localhost:8081/oneplatform/getMedicationAssess?systemId=SYS-0010&appKey=1111&type=");
+        sb.append(URLEncoder.encode("有效性","UTF-8"));
+        System.out.println(sb.toString());
+		String result = loadJSON(sb.toString());
 		
-		System.out.println(result);
+		System.out.println("result:"+result);
 	}
 	
     public static String loadJSON(String url) {
@@ -26,7 +30,11 @@ public class HttpTest {
                 json.append(inputLine);
             }
             in.close();
-        } catch (MalformedURLException e) {} catch (IOException e) {}
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return json.toString();
     }
 }
