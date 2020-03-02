@@ -5,16 +5,16 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.base.Stopwatch;
+import com.zy.sc.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.CharMatcher;
 import com.zy.sc.comm.Constant;
-import com.zy.sc.entity.CervicalVertebra;
-import com.zy.sc.entity.CervicalVertebraActivity;
-import com.zy.sc.entity.Subjects;
 import com.zy.sc.mapper.CervicalVertebraActivityMapper;
 import com.zy.sc.mapper.CervicalVertebraMapper;
 import com.zy.sc.mapper.SubjectsMapper;
@@ -38,21 +38,29 @@ public class SyncCvaThread implements Runnable{
 		final Stopwatch stopwatch = Stopwatch.createStarted();
 		//脊柱活动度
 		log.info("===================颈椎活动度数据同步开始==============");
-		List<CervicalVertebra> cvas = cervicalVertebraMapper.selectList(null);
+		List<CervicalVertebra> cvas = cervicalVertebraMapper.selectList(new QueryWrapper<CervicalVertebra>().isNull("DeletedUserId"));
 		log.info("===================获取颈椎活动度同步数据大小[{}]======",cvas.size());
 		System.out.println(cvas.size());
 		cvas.stream().forEach(cva->{
 			
 			CervicalVertebraActivity cvaActivity = conversion(cva);
-			cvaMapper.insert(cvaActivity);
-			
+			if (cvaActivity!=null){
+				cvaMapper.insert(cvaActivity);
+			}
+
 		});
 		log.info("===================颈椎活动度数据同步结束,耗时[{}]秒==============",stopwatch.elapsed(TimeUnit.SECONDS));
 		stopwatch.stop();
 	}
 	
 	public CervicalVertebraActivity conversion(CervicalVertebra cva){
+
 		CervicalVertebraActivity cvaActivity = new CervicalVertebraActivity();
+
+
+		try{
+
+
 		//原始数据处理
 		String OrginalData = cva.getOrginalData();
 		OrginalData = CharMatcher.breakingWhitespace().removeFrom(OrginalData);
@@ -61,6 +69,13 @@ public class SyncCvaThread implements Runnable{
 		
 		//处理后的数据与人员绑定
 		Subjects sub = subjectsMapper.selectById(cva.getSubjectId());
+
+		if (sub==null){
+
+			log.error("颈椎同步失败，{}",cva.toString());
+			return null;
+		}
+
 		String code = sub.getCode();
 		int id = sub.getId();
 
@@ -98,7 +113,11 @@ public class SyncCvaThread implements Runnable{
 		
 		cvaActivity.setTestValue(obj.getString("testValue"));
 		cvaActivity.setDelFlag("0");
-		
+		}catch (Exception e){
+
+			e.printStackTrace();
+			log.error("颈椎活动度:{},cva{}",e.toString(),cva);
+		}
 		return cvaActivity;
 	}
 

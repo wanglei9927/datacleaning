@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.ToString;
+
 import java.io.Serializable;
 
 /**
@@ -18,6 +20,7 @@ import java.io.Serializable;
  * @since 2019-12-18
  */
 @TableName("CurvesInsepctResult")
+@ToString
 public class CurvesInsepctResult extends Model<CurvesInsepctResult> {
 
     private static final long serialVersionUID = 1L;

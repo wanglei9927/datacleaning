@@ -5,16 +5,16 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.base.Stopwatch;
+import com.zy.sc.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.CharMatcher;
 import com.zy.sc.comm.Constant;
-import com.zy.sc.entity.InspectResult;
-import com.zy.sc.entity.SpinalBend;
-import com.zy.sc.entity.Subjects;
 import com.zy.sc.mapper.InspectResultMapper;
 import com.zy.sc.mapper.SpinalBendMapper;
 import com.zy.sc.mapper.SubjectsMapper;
@@ -38,15 +38,21 @@ public class SyncSbThread implements Runnable {
 	public void run() {
 		final Stopwatch stopwatch = Stopwatch.createStarted();
 		log.info("===================侧弯数据同步开始==============");
-		List<InspectResult> sbs = inspectResultMapper.selectList(null);
+		List<InspectResult> sbs = inspectResultMapper.selectList(new QueryWrapper<InspectResult>().isNull("DeletedUserId"));
 		log.info("===================侧弯同步数据大小[{}]======",sbs.size());
 
 		sbs.parallelStream().forEach((sb)->{
-			
 			SpinalBend spinalBend = conversion(sb);
-			
-			sbMapper.insert(spinalBend);
-			
+			if (spinalBend!=null) {
+//				LambdaQueryWrapper<SpinalBend> lamd = new LambdaQueryWrapper<SpinalBend>().eq(SpinalBend::getPersonId,spinalBend.getPersonId())
+//						;
+//				int i = sbMapper.delete(lamd);
+//				if (i>1){
+//					log.error("删除侧弯重复数据：{}",spinalBend);
+//				}
+				sbMapper.insert(spinalBend);
+			}
+
 		});
 		log.info("===================侧弯数据同步结束,耗时[{}]秒==============",stopwatch.elapsed(TimeUnit.SECONDS));
 		stopwatch.stop();
@@ -66,6 +72,12 @@ public class SyncSbThread implements Runnable {
 	
 		//处理后的数据与人员绑定
 		Subjects sub = subMapper.selectById(sb.getSubjectId());
+
+		if (sub==null){
+			log.error("侧弯同步失败，{}",sb.toString());
+			return null;
+		}
+
 
 		String code = sub.getCode();
 		Integer id = sub.getId();

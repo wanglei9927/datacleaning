@@ -5,17 +5,16 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.base.Stopwatch;
+import com.zy.sc.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.CharMatcher;
 import com.zy.sc.comm.Constant;
-import com.zy.sc.entity.CervicalVertebraActivity;
-import com.zy.sc.entity.CurvesInsepctResult;
-import com.zy.sc.entity.SpinalCurvature;
-import com.zy.sc.entity.Subjects;
 import com.zy.sc.mapper.CurvesInsepctResultMapper;
 import com.zy.sc.mapper.SpinalCurvatureMapper;
 import com.zy.sc.mapper.SubjectsMapper;
@@ -39,12 +38,14 @@ public class SyncScThread implements Runnable{
 	public void run() {
 		final Stopwatch stopwatch = Stopwatch.createStarted();
 	    log.info("===================曲度数据同步开始==============");
-		List<CurvesInsepctResult> curs = curvesInsepctResultMapper.selectList(null);
+		List<CurvesInsepctResult> curs = curvesInsepctResultMapper.selectList(new QueryWrapper<CurvesInsepctResult>().isNull("DeletedUserId"));
 		log.info("===================曲度同步数据大小[{}]======",curs.size());
 
 		curs.stream().forEach((cur)->{
 			SpinalCurvature sCurvature = conversion(cur);
-			scMapper.insert(sCurvature);
+			if (sCurvature!=null){
+				scMapper.insert(sCurvature);
+			}
 		});
 
 		log.info("===================曲度数据结束同步,耗时[{}]秒======",stopwatch.elapsed(TimeUnit.SECONDS));
@@ -64,6 +65,12 @@ public class SyncScThread implements Runnable{
 		
 		//处理后的数据与人员绑定
 		Subjects sub = subjectsMapper.selectById(cur.getSubjectId());
+
+		if (sub==null){
+			log.error("颈椎同步失败，{}",cur.toString());
+			return null;
+		}
+
 		String code = sub.getCode();
 		int id = sub.getId();
 		String personId = code + id;
