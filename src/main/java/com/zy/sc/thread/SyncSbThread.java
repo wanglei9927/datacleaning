@@ -1,6 +1,7 @@
 package com.zy.sc.thread;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
@@ -8,6 +9,7 @@ import javax.annotation.Resource;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.Maps;
 import com.zy.sc.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -38,7 +40,8 @@ public class SyncSbThread implements Runnable {
 	public void run() {
 		final Stopwatch stopwatch = Stopwatch.createStarted();
 		log.info("===================侧弯数据同步开始==============");
-		List<InspectResult> sbs = inspectResultMapper.selectList(new QueryWrapper<InspectResult>().isNull("DeletedUserId"));
+		List<InspectResult> sbs = inspectResultMapper.selectList(new QueryWrapper<InspectResult>().eq("id",30459).isNull("DeletedUserId")
+				.orderByDesc("CreatedDate"));
 		log.info("===================侧弯同步数据大小[{}]======",sbs.size());
 
 		sbs.parallelStream().forEach((sb)->{
@@ -50,7 +53,19 @@ public class SyncSbThread implements Runnable {
 //				if (i>1){
 //					log.error("删除侧弯重复数据：{}",spinalBend);
 //				}
-				sbMapper.insert(spinalBend);
+				String personId = spinalBend.getPersonId();
+				Map params = Maps.newHashMap();
+				params.put("person_id",personId);
+				params.put("testing_service_id",Constant.ORG_ID);
+				List<SpinalBend> results = sbMapper.selectByMap(params);
+
+				if(results!=null&&results.size()>0){
+					SpinalBend temp = results.get(0);
+					spinalBend.setId(temp.getId());
+					sbMapper.updateById(temp);
+				}else{
+					sbMapper.insert(spinalBend);
+				}
 			}
 
 		});
@@ -81,7 +96,7 @@ public class SyncSbThread implements Runnable {
 
 		String code = sub.getCode();
 		Integer id = sub.getId();
-		String personId =  code+id;
+		String personId =  code+id+"x";
 		//person_id
 		spinalBend.setPersonId(personId);
 		

@@ -1,6 +1,8 @@
 package com.zy.sc.thread;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
@@ -8,6 +10,7 @@ import javax.annotation.Resource;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.Maps;
 import com.zy.sc.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -38,14 +41,28 @@ public class SyncCvaThread implements Runnable{
 		final Stopwatch stopwatch = Stopwatch.createStarted();
 		//脊柱活动度
 		log.info("===================颈椎活动度数据同步开始==============");
-		List<CervicalVertebra> cvas = cervicalVertebraMapper.selectList(new QueryWrapper<CervicalVertebra>().isNull("DeletedUserId"));
+		List<CervicalVertebra> cvas = cervicalVertebraMapper.selectList(new QueryWrapper<CervicalVertebra>().isNull("DeletedUserId")
+																											.orderByDesc("CreatedDate"));
 		log.info("===================获取颈椎活动度同步数据大小[{}]======",cvas.size());
 		System.out.println(cvas.size());
 		cvas.stream().forEach(cva->{
 			
 			CervicalVertebraActivity cvaActivity = conversion(cva);
 			if (cvaActivity!=null){
-				cvaMapper.insert(cvaActivity);
+
+				String personId = cvaActivity.getPersonId();
+				Map params = Maps.newHashMap();
+				params.put("person_id",personId);
+				params.put("testing_service_id",Constant.ORG_ID);
+				List<CervicalVertebraActivity> results = cvaMapper.selectByMap(params);
+
+				if(results!=null&&results.size()>0){
+				    CervicalVertebraActivity temp = results.get(0);
+				    cvaActivity.setId(temp.getId());
+					cvaMapper.updateById(temp);
+				}else{
+					cvaMapper.insert(cvaActivity);
+				}
 			}
 
 		});
@@ -80,6 +97,7 @@ public class SyncCvaThread implements Runnable{
 		int id = sub.getId();
 
 		String personId = code+id;
+
 		//id
 		//person_id
 		cvaActivity.setPersonId(personId);

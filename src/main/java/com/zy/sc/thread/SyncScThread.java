@@ -1,6 +1,7 @@
 package com.zy.sc.thread;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
@@ -8,6 +9,7 @@ import javax.annotation.Resource;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.Maps;
 import com.zy.sc.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -38,13 +40,26 @@ public class SyncScThread implements Runnable{
 	public void run() {
 		final Stopwatch stopwatch = Stopwatch.createStarted();
 	    log.info("===================曲度数据同步开始==============");
-		List<CurvesInsepctResult> curs = curvesInsepctResultMapper.selectList(new QueryWrapper<CurvesInsepctResult>().isNull("DeletedUserId"));
+		List<CurvesInsepctResult> curs = curvesInsepctResultMapper.selectList(new QueryWrapper<CurvesInsepctResult>().isNull("DeletedUserId")
+				.orderByDesc("CreatedDate"));
 		log.info("===================曲度同步数据大小[{}]======",curs.size());
 
 		curs.stream().forEach((cur)->{
 			SpinalCurvature sCurvature = conversion(cur);
 			if (sCurvature!=null){
-				scMapper.insert(sCurvature);
+				String personId = sCurvature.getPersonId();
+				Map params = Maps.newHashMap();
+				params.put("person_id",personId);
+				params.put("testing_service_id",Constant.ORG_ID);
+				List<SpinalCurvature> results = scMapper.selectByMap(params);
+
+				if(results!=null&&results.size()>0){
+					SpinalCurvature temp = results.get(0);
+					sCurvature.setId(temp.getId());
+					scMapper.updateById(temp);
+				}else{
+					scMapper.insert(sCurvature);
+				}
 			}
 		});
 

@@ -28,6 +28,7 @@ public class CervicalVertebraActivity extends Model<CervicalVertebraActivity> {
 	/**
 	 * 检测服务ID
 	 */
+	@TableField(value="testing_service_id")
 	private String testingServiceId;
 
 	/**

@@ -114,9 +114,11 @@ spring:
       datasource:
         master:
           username: root
-          password: root
+          password: WHYF_201708
+          #password: root
           driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://localhost:3306/jzpt?useUnicode=true&amp;characterEncoding=utf8
+          url: jdbc:mysql://172.25.252.20:3306/one_platform_jz?useUnicode=true&amp;characterEncoding=utf8
+          #url: jdbc:mysql://localhost:3306/jzpt?useUnicode=true&amp;characterEncoding=utf8
           druid: # 以下参数针对每个库可以重新设置druid参数
             initial-size:
             validation-query: select 1 FROM DUAL #比如oracle就需要重新设置这个
@@ -125,7 +127,7 @@ spring:
           username: sa
           password: 800813
           driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-          url: jdbc:sqlserver://192.168.2.167:50708;DatabaseName=SpineData1
+          url: jdbc:sqlserver://172.25.252.104:50708;DatabaseName=SpineData1
           druid: # 以下参数针对每个库可以重新设置druid参数
             initial-size:
             validation-query: select 1  #比如oracle就需要重新设置这个

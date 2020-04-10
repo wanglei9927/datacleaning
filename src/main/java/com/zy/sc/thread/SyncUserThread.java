@@ -36,7 +36,8 @@ public class SyncUserThread implements Runnable{
 
 		log.info("===================人员数据同步开始==============");
 
-		List<Subjects> subs = subjectsMapper.selectList(new QueryWrapper<Subjects>().isNull("DeletedUserId"));
+		List<Subjects> subs = subjectsMapper.selectList(new QueryWrapper<Subjects>().eq("id",3611)
+																					.isNull("DeletedUserId"));
 
 		log.info("===================人员同步数据大小[{}]==========",subs.size());
 		subs.parallelStream().forEach(sub->{
@@ -50,11 +51,11 @@ public class SyncUserThread implements Runnable{
 			List<PhPerson> list = phPersonMapper.selectList(lamd);
 
 
-			if (list!=null&&list.size()>1){
-			    //记录本次结果
-				log.error("人员同步失败，导入的人员重复：{}",sub.toString());
-				return;
-			}
+//			if (list!=null&&list.size()>0){
+//			    //记录本次结果
+//				log.error("人员同步失败，导入的人员重复：{}",sub.toString());
+//				return;
+//			}
 
 			PhPerson person = userConversionPerson(sub);
 			//删除主键重复的数据
@@ -83,12 +84,12 @@ public class SyncUserThread implements Runnable{
 		String company = sub.getCompany();
 		String phone = sub.getPhone();
 		//存储
-		person.setName(name);	
+		person.setName(name+"钟公庙中学");
 		person.setSex(gender==1?"01":"02");
 		person.setBirthday(birthday.toLocalDate());
 
 		//personId = code + id 降低重复概率
-		person.setPersonId(code+id);
+		person.setPersonId(code+id+"x");
 
 		person.setCreateDatetime(createdDate);
 		person.setIdCard(iDCardNum);
@@ -138,6 +139,7 @@ public class SyncUserThread implements Runnable{
 		company = sb.toString();
 
 		}
+		company ="宁波市鄞州区钟公庙中学";
 		person.setCompany(company);
 		person.setMobilePhone(phone);
 		person.setIsStudent("0");
