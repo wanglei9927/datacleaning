@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.sc.mapper.SysOrgMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zy.sc.entity.SysOrg">
+        <id column="org_id" property="orgId" />
+        <result column="org_name" property="orgName" />
+        <result column="org_type" property="orgType" />
+        <result column="org_level" property="orgLevel" />
+        <result column="org_classify" property="orgClassify" />
+        <result column="org_property" property="orgProperty" />
+        <result column="pym" property="pym" />
+        <result column="org_code" property="orgCode" />
+        <result column="suffix" property="suffix" />
+        <result column="parent_id" property="parentId" />
+        <result column="intro" property="intro" />
+        <result column="address" property="address" />
+        <result column="traffic_route" property="trafficRoute" />
+        <result column="tel" property="tel" />
+        <result column="region" property="region" />
+        <result column="website" property="website" />
+        <result column="longitude" property="longitude" />
+        <result column="latitude" property="latitude" />
+        <result column="org_photo" property="orgPhoto" />
+        <result column="org_photo_url" property="orgPhotoUrl" />
+        <result column="sort_no" property="sortNo" />
+        <result column="traffic_guide" property="trafficGuide" />
+        <result column="reservation" property="reservation" />
+        <result column="especiallydept" property="especiallydept" />
+        <result column="payment" property="payment" />
+        <result column="calculate_start_date" property="calculateStartDate" />
+        <result column="area_id" property="areaId" />
+        <result column="postcode" property="postcode" />
+        <result column="public_status" property="publicStatus" />
+        <result column="resident_population" property="residentPopulation" />
+        <result column="focus_all_count" property="focusAllCount" />
+        <result column="gxy_all_count" property="gxyAllCount" />
+        <result column="tnb_all_count" property="tnbAllCount" />
+        <result column="old_all_count" property="oldAllCount" />
+        <result column="subordinate_clinic_count" property="subordinateClinicCount" />
+        <result column="villages_and_towns_count" property="villagesAndTownsCount" />
+        <result column="online_status" property="onlineStatus" />
+        <result column="center_attributes" property="centerAttributes" />
+        <result column="signed_agreement" property="signedAgreement" />
+        <result column="system_id" property="systemId" />
+        <result column="del_flag" property="delFlag" />
+        <result column="create_by" property="createBy" />
+        <result column="create_datetime" property="createDatetime" />
+        <result column="last_update_by" property="lastUpdateBy" />
+        <result column="last_update_datetime" property="lastUpdateDatetime" />
+    </resultMap>
+
+</mapper>

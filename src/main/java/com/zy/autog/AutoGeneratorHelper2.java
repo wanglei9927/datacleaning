@@ -32,7 +32,7 @@ public class AutoGeneratorHelper2 {
 
 		// 全局配置
 		GlobalConfig gc = new GlobalConfig();
-		gc.setOutputDir("/Users/wanglei/eclipse-workspace/datacleaning/src/main/java");
+		gc.setOutputDir("/Users/wanglei/git/datacleaning/src/main/java");
 		gc.setFileOverride(true);
 		gc.setActiveRecord(true);// 开启 activeRecord 模式
 		gc.setEnableCache(false);// XML 二级缓存
