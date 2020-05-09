@@ -57,7 +57,7 @@ public class AutoGeneratorHelper2 {
 		//strategy.setNaming(NamingStrategy.remove_prefix_and_camel);// 表名生成策略
 		
 		// 需要生成的表 
-        strategy.setInclude(new String[] { "ph_person", "cervical_vertebra_activity", "spinal_bend", "spinal_curvature" }); // 需要生成的表
+        strategy.setInclude(new String[] { "sys_org_modul", "sys_org", "sys_role", "sys_role_modul" }); // 需要生成的表
 
 		// 字段名生成策略
 		//strategy.setFieldNaming(NamingStrategy.underline_to_camel);

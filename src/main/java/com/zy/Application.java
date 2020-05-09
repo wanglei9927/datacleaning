@@ -34,17 +34,20 @@ public class Application implements CommandLineRunner{
 
 	@Override
 	public void run(String... args){
-		Thread userThread = new Thread(syncUserThread);
-		userThread.start();
+//		Thread userThread = new Thread(syncUserThread);
+//		userThread.start();
 
 //		Thread cvaThread = new Thread(syncCvaThread);
 //		cvaThread.start();
 
-		Thread sbThread = new Thread(syncSbThread);
-		sbThread.start();
+//		Thread sbThread = new Thread(syncSbThread);
+//		sbThread.start();
 
 //		Thread scThread = new Thread(syncScThread);
 //		scThread.start();
+
+
+
 	}
 	
 	
