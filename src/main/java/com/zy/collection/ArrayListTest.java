@@ -1,6 +1,9 @@
 package com.zy.collection;
 
+import com.google.common.collect.Lists;
 import org.junit.Test;
+
+import java.util.List;
 
 public class ArrayListTest {
 
@@ -27,5 +30,20 @@ public class ArrayListTest {
         for (int i=0;i<a.length;i++){
             System.out.println(a[i]);
         }
+    }
+
+
+    @Test
+    public void test2(){
+
+        List<String> list= Lists.newArrayList();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        list.add("4");
+        list.add("5");
+        list.add("6");
+        list.add("7");
+        list.add("8");
     }
 }
