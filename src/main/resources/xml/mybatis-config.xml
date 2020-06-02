@@ -22,6 +22,7 @@
 		<setting name="multipleResultSetsEnabled" value="true" />
 		<setting name="useColumnLabel" value="true" />
 		<setting name="defaultExecutorType" value="REUSE" />
+		<setting name="mapUnderscoreToCamelCase" value="true" />
 		<setting name="defaultStatementTimeout" value="25000" />
 		
 	</settings>

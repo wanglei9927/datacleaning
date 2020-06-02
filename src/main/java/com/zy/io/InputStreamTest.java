@@ -101,4 +101,10 @@ public class InputStreamTest {
 	        }
 
 	}
+
+	@Test
+	public void testjavaidfile(){
+
+		System.out.println(System.getProperty("java.io.tmpdir"));
+	}
 }
